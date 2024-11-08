@@ -40,4 +40,9 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          $(tag)
+          
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'Azure subscription (PAYG)(ff3487eb-e5ec-44cb-8d02-b4b59abb7f9e)'
+        appName: 'flaskapp-demo'
+        containers: '$(containerRegistry)/$(imageRepository):$(tag)'
