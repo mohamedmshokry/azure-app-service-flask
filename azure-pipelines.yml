@@ -1,7 +1,15 @@
 name: 01-Flask-App-CI
 
 trigger:
-- main
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - Dockerfile
+      - app/*
+      - run.py
+      - requirements.txt
 
 pool:
   name: 'local-hosted'
