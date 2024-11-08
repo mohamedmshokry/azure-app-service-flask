@@ -2,7 +2,8 @@ class ProductService:
     def __init__(self):
         self.products = [
             {"id": 1, "name": "Laptop"},
-            {"id": 2, "name": "Smartphone"}
+            {"id": 2, "name": "Smartphone"},
+            {"id": 3, "name": "Smart Screen"}
         ]
 
     def get_products(self):
