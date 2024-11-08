@@ -13,3 +13,16 @@ There are two Azure DevOps pipelines:
 
 
 ## Long Story (Detailed Steps)
+* Create ACR to host the app images
+    ```bash
+    az group create --name azure-app-service-flask --location eastus
+    az acr create --resource-group azure-app-service-flask --name azappsvcreg --sku Basic
+    ```
+* Enable Admin account
+    ```bash
+    az acr update -n azappsvcreg --admin-enabled true
+    ```
+
+
+## To Do's
+* Change ACR to premium plan and make Private Endpoint for the ACR instead of public access

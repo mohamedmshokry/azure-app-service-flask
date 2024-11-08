@@ -2,7 +2,7 @@ class UserService:
     def __init__(self):
         self.users = [
             {"id": 1, "name": "John Doe"},
-            {"id": 2, "name": "Jane Doe"}
+            {"id": 2, "name": "Mohamed Shokry"}
         ]
 
     def get_users(self):
