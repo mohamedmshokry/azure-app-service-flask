@@ -22,7 +22,34 @@ There are two Azure DevOps pipelines:
     ```bash
     az acr update -n azappsvcreg --admin-enabled true
     ```
+* Create Resource Group, Storage account and Blob container for Terraform backend
+    ```bash
+    az group create --name pwcTask-italynorth-rg --location italynorth
+    az storage account create \
+        --name terraformitalynorth \
+        --resource-group pwcTask-italynorth-rg \
+        --location italynorth \
+        --sku Standard_LRS \
+        --kind StorageV2 \
+        --min-tls-version TLS1_2 \
+        --allow-blob-public-access true 
+    ```
 
+    ```bash
+    # Enabling Blob container versioning
+    az storage account blob-service-properties update \
+    --resource-group pwcTask-italynorth-rg \
+    --account-name terraformitalynorth \
+    --enable-versioning true
+    ```
+
+    ```bash
+    # Create Blob container for Terraform state
+    az storage container create \
+    --account-name terraformitalynorth \
+    --name terraformstate \
+    --auth-mode login
+    ```
 
 ## To Do's
 * Change ACR to premium plan and make Private Endpoint for the ACR instead of public access
