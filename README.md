@@ -1,5 +1,5 @@
 # Azure App Service Flask
-Deployment trial for sample Flask app on Azure App Service using Terraform and Azure DevOps
+Deployment trial for a containerized sample Flask app on Azure App Web App for Containers using Terraform and Azure DevOps
 
 
 # Flask App deployment
@@ -8,7 +8,7 @@ The sample Flask app is Dockerized using the `Dockerfile` in the repo with secur
 ## TL;DR
 This repo contains:
 - Terraform files needed to provision Azure Web app for container and Application Gateway with all requiered other resouces
-- Azure pipeline yaml file that automates the image build and container deployment to the web app upon changes on code or Dockerfile only
+- Azure pipeline yaml file that automates the image build and push to ACR and container deployment to the web app upon changes on code or Dockerfile only
 
 To get the sample Flask app deployed to Azure web app for containers
 ```bash
@@ -32,7 +32,15 @@ az storage container create \
     --account-name terraformitalynorth \
     --name terraformstate \
     --auth-mode login
-#Fork the rpeo using GUI and clone your forked one
+
+# Create Azure Service Principal to be used by terraform and export the below variables
+# sh
+export ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
+export ARM_CLIENT_SECRET="12345678-0000-0000-0000-000000000000"
+export ARM_TENANT_ID="10000000-0000-0000-0000-000000000000"
+export ARM_SUBSCRIPTION_ID="20000000-0000-0000-0000-000000000000"
+
+#Fork the repo using GUI and clone your forked one
 git clone https://github.com/mohamedmshokry/azure-app-service-flask.git
 cd azure-app-service-flask/Terraform
 cat << EOF | tee terraform.tfvars
@@ -93,14 +101,14 @@ terraform apply -auto-approve
 
 
 ## Long Story (Detailed Steps)
-For the sample Flask app we have thee are multiple services that can use to host the application:
-- Web App for Containers: This is the servive used for below steps
+For the sample Flask app there are multiple services that can use to host the application:
+- Web App for Containers: This is the service used for this tutorial
 - Azure Container Apps (ACA)
 - Azure Container Instances (ACI)
 - Azure Kubernetes Service (AKS)
 - Azure Functions
 
-### 01- Create Azure Container Registry (ACR) amd Blob Container for terraform Backend
+### 01- Create Azure Container Registry (ACR) and Blob Container for terraform Backend
 * Create ACR to host the app images
     ```bash
     az group create --name azure-app-service-flask --location eastus
@@ -200,16 +208,17 @@ terraform plan
 terraform apply
 ```
 
-Details about the created app service:
+Details about the created web app service:
 - The App web app for container created is configuered to allow access only from default vnet subnet where Application gateway is provisioned
 - There is a Log ***Analytics workspace*** and ***Application Insights*** created for the web app, instrumentation key and connection string are configuered for the application settings
+- There is a limitation for Insights runtime monitoring when in comes to container. It is not currently supported for custom containers https://learn.microsoft.com/en-us/azure/azure-monitor/app/codeless-app-service?tabs=python#prerequisites
 
 ### 03- Create Azure DevOps pipeline
 - Assuming you have a free account on Azure you can create a new organization on https://dev.azure.com/
 - Inside the organization create a new project for the flask app
 - Inside the project we will utilize only the Pipelines feature, so Create a pipeline where code in the forked repo you did
 - Make it an empty pipeline, the pipeline is provided in the "azure-pipelines.yml" in the repo
-- What you will need to do is to authorize the pipline to use your subscription and select the created "Azure web app for container" resource to deploy the container on
+- Create a service connection for the ACR to be used in the pipeline https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops#azure-container-registry
 - The pipeline is triggered only for application code and Docker file modifications
 
 ## To Do's
