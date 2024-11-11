@@ -20,20 +20,15 @@ resource "azurerm_application_insights" "flask-app-insights" {
   application_type    = var.application_type
 }
 
-resource "azurerm_container_app_environment" "flask-app-environment" {
-  name                       = var.flask-app-environment-name
-  location                   = azurerm_resource_group.flask-app-italynorth-rg.location
-  resource_group_name        = azurerm_resource_group.flask-app-italynorth-rg.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.flask-app-log-ws.id
-}
 
 # Create App Service Plan
 resource "azurerm_service_plan" "app_service_plan" {
-  name                = "${var.web_app_name}-asp"
-  location            = var.flask_app_rg_name_location
-  resource_group_name = azurerm_resource_group.flask-app-italynorth-rg.name
-  os_type             = var.app_service_plan_kind
-  sku_name            = var.app_service_plan_sku_name
+  name                   = "${var.web_app_name}-asp"
+  location               = var.flask_app_rg_name_location
+  resource_group_name    = azurerm_resource_group.flask-app-italynorth-rg.name
+  os_type                = var.app_service_plan_kind
+  sku_name               = var.app_service_plan_sku_name
+  zone_balancing_enabled = true
 }
 
 
@@ -62,6 +57,7 @@ resource "azurerm_linux_web_app" "web_app" {
       docker_registry_password = data.azurerm_container_registry.acr.admin_password
     }
     ip_restriction_default_action = "Deny"
+    # TODO: Need to use for_each for multiple ip_restrictions
     ip_restriction {
       action                    = "Allow"
       name                      = "allow_only_from_appgw"
