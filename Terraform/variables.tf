@@ -18,11 +18,6 @@ variable "flask-app-log-ws" {
   description = "Log Analytics Workspace"
 }
 
-variable "flask-app-environment-name" {
-  type        = string
-  description = "Environment Name"
-}
-
 variable "web_app_name" {
   type        = string
   description = "Web App Name"
