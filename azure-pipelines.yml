@@ -39,7 +39,9 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        tags: $(tag)
+        tags: |
+          $(tag)
+          latest
           
     - task: AzureWebAppContainer@1
       inputs:
