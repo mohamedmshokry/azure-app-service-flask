@@ -69,15 +69,36 @@ resource "azurerm_linux_web_app" "web_app" {
   }
 
   app_settings = {
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.flask-app-insights.instrumentation_key
-    #   "APPINSIGHTS_PROFILERFEATURE_VERSION" = "1.0.0"
-    #   "APPINSIGHTS_SNAPSHOTFEATURE_VERSION" = "1.0.0"
-    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.flask-app-insights.connection_string
-    #   "ApplicationInsightsAgent_EXTENSION_VERSION" = ""
-    #   "DiagnosticServices_EXTENSION_VERSION" = ""
-    #   "InstrumentationEngine_EXTENSION_VERSION" = "" 
-    #   "SnapshotDebugger_EXTENSION_VERSION" = ""
-    #   "XDT_MicrosoftApplicationInsights_BaseExtensions" = ""
-    #   "XDT_MicrosoftApplicationInsights_Mode" = ""
+    "APPINSIGHTS_INSTRUMENTATIONKEY"                  = azurerm_application_insights.flask-app-insights.instrumentation_key
+    "APPINSIGHTS_PROFILERFEATURE_VERSION"             = "1.0.0"
+    "APPINSIGHTS_SNAPSHOTFEATURE_VERSION"             = "1.0.0"
+    "APPLICATIONINSIGHTS_CONFIGURATION_CONTENT"       = ""
+    "APPLICATIONINSIGHTS_CONNECTION_STRING"           = azurerm_application_insights.flask-app-insights.connection_string
+    "ApplicationInsightsAgent_EXTENSION_VERSION"      = "~3"
+    "DiagnosticServices_EXTENSION_VERSION"            = "~3"
+    "InstrumentationEngine_EXTENSION_VERSION"         = "disabled"
+    "SnapshotDebugger_EXTENSION_VERSION"              = "disabled"
+    "XDT_MicrosoftApplicationInsights_BaseExtensions" = "disabled"
+    "XDT_MicrosoftApplicationInsights_Mode"           = "recommended"
+    "XDT_MicrosoftApplicationInsights_PreemptSdk"     = "disabled"
+  }
+
+  sticky_settings {
+    app_setting_names = [
+      "APPINSIGHTS_INSTRUMENTATIONKEY",
+      "APPLICATIONINSIGHTS_CONNECTION_STRING ",
+      "APPINSIGHTS_PROFILERFEATURE_VERSION",
+      "APPINSIGHTS_SNAPSHOTFEATURE_VERSION",
+      "ApplicationInsightsAgent_EXTENSION_VERSION",
+      "XDT_MicrosoftApplicationInsights_BaseExtensions",
+      "DiagnosticServices_EXTENSION_VERSION",
+      "InstrumentationEngine_EXTENSION_VERSION",
+      "SnapshotDebugger_EXTENSION_VERSION",
+      "XDT_MicrosoftApplicationInsights_Mode",
+      "XDT_MicrosoftApplicationInsights_PreemptSdk",
+      "APPLICATIONINSIGHTS_CONFIGURATION_CONTENT",
+      "XDT_MicrosoftApplicationInsightsJava",
+      "XDT_MicrosoftApplicationInsights_NodeJS",
+    ]
   }
 }
