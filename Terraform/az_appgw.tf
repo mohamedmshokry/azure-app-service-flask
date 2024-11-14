@@ -50,7 +50,12 @@ resource "azurerm_application_gateway" "flask-appgw" {
   sku {
     name     = "Standard_v2"
     tier     = "Standard_v2"
-    capacity = 2
+    # capacity = 2
+  }
+
+  autoscale_configuration {
+    min_capacity = var.app_gateway_details["min_capacity"]
+    max_capacity = var.app_gateway_details["max_capacity"]
   }
 
   gateway_ip_configuration {
