@@ -48,8 +48,8 @@ resource "azurerm_application_gateway" "flask-appgw" {
   location            = azurerm_resource_group.flask-app-italynorth-rg.location
 
   sku {
-    name     = "Standard_v2"
-    tier     = "Standard_v2"
+    name = "Standard_v2"
+    tier = "Standard_v2"
     # capacity = 2
   }
 
