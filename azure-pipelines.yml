@@ -19,7 +19,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'afd06cf3-fde3-48e0-87ca-94824e26fcd8'
+  dockerRegistryServiceConnection: '824732f5-afff-457d-abef-9a35da72a710'
   imageRepository: 'flaskapp'
   containerRegistry: 'azappsvcreg.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
