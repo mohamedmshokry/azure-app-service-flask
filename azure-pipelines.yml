@@ -45,6 +45,6 @@ stages:
           
     - task: AzureWebAppContainer@1
       inputs:
-        azureSubscription: 'Azure subscription (PAYG)(ff3487eb-e5ec-44cb-8d02-b4b59abb7f9e)'
+        azureSubscription: 'Azure subscription (PAYG)(1)(ff3487eb-e5ec-44cb-8d02-b4b59abb7f9e)'
         appName: 'flask-app-container'
         containers: '$(containerRegistry)/$(imageRepository):$(tag)'
