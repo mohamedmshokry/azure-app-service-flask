@@ -4,7 +4,10 @@ class ProductService:
             {"id": 1, "name": "Laptop"},
             {"id": 2, "name": "Smartphone"},
             {"id": 3, "name": "Smart Screen"},
-            {"id": 4, "name": "Tablet"}
+            {"id": 4, "name": "Tablet"},
+            {"id": 5, "name": "Smart Watch"},
+            {"id": 6, "name": "Headphones"},
+            {"id": 7, "name": "Smart Speaker"}
         ]
 
     def get_products(self):
