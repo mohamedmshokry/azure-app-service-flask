@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "pwcTask-italynorth-rg"
+    resource_group_name  = "flask-app-tf-italynorth-rg"
     storage_account_name = "terraformitalynorth"
     container_name       = "terraformstate"
     key                  = "terraform.tfstate"

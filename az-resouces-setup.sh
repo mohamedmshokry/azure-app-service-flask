@@ -7,11 +7,11 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Resource details
-RG1_NAME="azure-app-service-flask"
+RG1_NAME="flask-app-acr-eastus-rg"
 RG1_LOCATION="eastus"
 ACR_NAME="azappsvcreg"
 
-RG2_NAME="pwcTask-italynorth-rg"
+RG2_NAME="flask-app-tf-italynorth-rg"
 RG2_LOCATION="italynorth"
 STORAGE_NAME="terraformitalynorth"
 CONTAINER_NAME="terraformstate"
